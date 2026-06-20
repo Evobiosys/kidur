@@ -163,7 +163,7 @@
         var btn = form.querySelector('button');
         btn.disabled = true;
         btn.textContent = 'Subscribing…';
-        fetch('https://subscriber.evobiosys.org/subscribe', {
+        fetch('https://subscriber.kidur.org/subscribe', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email: email, source: 'kidur.org', project: 'Kidur' })
