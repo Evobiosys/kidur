@@ -127,7 +127,7 @@
           <input type="email" id="kd-nl-email" name="email" placeholder="your@email.com" required>
           <button type="submit" class="btn btn-accent">Subscribe</button>
         </form>
-        <small id="kd-nl-note">Double opt-in. Unsubscribe anytime.</small>
+        <small id="kd-nl-note">Double opt-in. Unsubscribe anytime. No tracking.</small>
       </div>
     </div>
   </section>
@@ -166,21 +166,25 @@
         fetch('https://subscriber.kidur.org/subscribe', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: email, source: 'kidur.org', project: 'Kidur' })
+          body: JSON.stringify({ email: email, project: 'kidur', source: 'kidur.org', gdpr: true })
         })
           .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
-          .then(function () {
+          .then(function (data) {
             document.getElementById('kd-nl-email').value = '';
             btn.disabled = false;
             btn.textContent = 'Subscribe';
-            note.textContent = 'Confirmed — check your inbox to complete your subscription.';
             note.style.color = 'var(--acc)';
             note.style.fontSize = '1rem';
+            if (data && data.status === 'already_subscribed') {
+              note.textContent = "You're already on the list.";
+            } else {
+              note.textContent = 'Almost there — check your inbox to confirm.';
+            }
           })
           .catch(function () {
             btn.disabled = false;
             btn.textContent = 'Subscribe';
-            note.textContent = 'Something went wrong — try again or email connect@kidur.org';
+            note.textContent = 'Subscription service is briefly unavailable — please try again later.';
           });
       });
     })();
