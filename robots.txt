@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://kidur.org/sitemap.xml
